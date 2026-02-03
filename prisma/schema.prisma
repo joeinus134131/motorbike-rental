@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  PAID
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          Role      @default(USER)
+  image         String?
+  bookings      Booking[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Motorbike {
+  id            String    @id @default(cuid())
+  name          String
+  brand         String
+  model         String
+  year          Int
+  pricePerDay   Float
+  imageUrl      String
+  description   String    @db.Text
+  status        String    @default("available") // available, maintenance, rented
+  bookings      Booking[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String
+  motorbikeId   String
+  startDate     DateTime
+  endDate       DateTime
+  totalPrice    Float
+  status        BookingStatus @default(PENDING)
+  paymentId     String?       // Dummy payment ID
+  user          User          @relation(fields: [userId], references: [id])
+  motorbike     Motorbike     @relation(fields: [motorbikeId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model LandingPageConfig {
+  id            String   @id @default("default")
+  heroTitle     String
+  heroSubtitle  String
+  heroImage     String
+  contactEmail  String
+  contactPhone  String
+  address       String   @db.Text
+  updatedAt     DateTime @updatedAt
+}
+
+model SystemConfig {
+  id                  String   @id @default("default")
+  paymentGatewayMode  String   @default("dummy") // dummy, production
+  paymentInstructions String   @db.Text
+  maintenanceMode     Boolean  @default(false)
+  updatedAt           DateTime @updatedAt
+}
