@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Motorbike } from "@prisma/client";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Bike, ShieldCheck, Clock, MapPin, Star, ArrowRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -187,6 +188,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Calendar, CreditCard, ChevronRight } from "lucide-react";
 
 export default async function UserDashboard() {
@@ -75,6 +76,7 @@ export default async function UserDashboard() {
           </div>
         )}
       </div>
+      <Footer />
     </main>
   );
 }
