@@ -70,16 +70,16 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 border border-white hover:bg-white transition-all duration-500 hover:-translate-y-4">
-              <div className="w-20 h-20 bg-indigo-50 text-primary rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-6 transition-transform">
+              <div className="w-20 h-20 bg-orange-50 text-primary rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-6 transition-transform">
                 <Bike size={40} />
               </div>
               <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase">Unit Terbaru</h3>
               <p className="text-gray-500 leading-relaxed text-lg">Seluruh unit motor kami dijamin dalam kondisi prima dengan perawatan rutin berkala.</p>
             </div>
             
-            <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-2xl shadow-indigo-200/20 border border-indigo-100/50 hover:bg-white transition-all duration-500 hover:-translate-y-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700" />
-              <div className="w-20 h-20 bg-rose-50 text-rose-500 rounded-3xl flex items-center justify-center mb-10 group-hover:-rotate-6 transition-transform">
+            <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-2xl shadow-orange-200/20 border border-orange-100/50 hover:bg-white transition-all duration-500 hover:-translate-y-4 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700" />
+              <div className="w-20 h-20 bg-orange-50 text-orange-500 rounded-3xl flex items-center justify-center mb-10 group-hover:-rotate-6 transition-transform">
                 <ShieldCheck size={40} />
               </div>
               <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase text-gray-900">Proteksi Penuh</h3>

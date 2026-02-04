@@ -133,7 +133,7 @@ export default function NewMotorbikePage() {
           </div>
 
           <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/40 relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-2 h-full bg-indigo-500/20" />
+             <div className="absolute top-0 left-0 w-2 h-full bg-orange-500/20" />
              <h3 className="text-xl font-black text-gray-900 tracking-tight mb-8">Harga & Status</h3>
              
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -256,11 +256,11 @@ export default function NewMotorbikePage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-indigo-500/10 to-transparent p-10 rounded-[2.5rem] border border-white shadow-xl">
-             <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-600/20">
+          <div className="bg-gradient-to-br from-orange-500/10 to-transparent p-10 rounded-[2.5rem] border border-white shadow-xl">
+             <div className="w-10 h-10 bg-orange-600 text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-orange-600/20">
                 <Sparkles size={18} />
              </div>
-             <p className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em] mb-3">Editor Hint</p>
+             <p className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em] mb-3">Editor Hint</p>
              <p className="text-sm font-bold text-gray-600 leading-relaxed italic">"Gunakan deskripsi yang informatif seperti kelengkapan surat, bonus helm, atau kondisi ban untuk meningkatkan minat penyewa."</p>
           </div>
         </div>

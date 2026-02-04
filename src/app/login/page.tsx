@@ -119,14 +119,6 @@ function LoginContent() {
             </Link>
           </p>
           
-          <div className="bg-amber-50/50 p-6 rounded-[1.5rem] border border-amber-100 text-left relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-full -mr-8 -mt-8" />
-            <p className="text-[10px] font-black text-amber-800 uppercase tracking-[0.2em] mb-3">Admin Access</p>
-            <div className="space-y-1.5">
-              <p className="text-xs font-bold text-amber-700">Email: <span className="text-gray-900">admin@sewamotor.com</span></p>
-              <p className="text-xs font-bold text-amber-700">Pass: <span className="text-gray-900">admin123</span></p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

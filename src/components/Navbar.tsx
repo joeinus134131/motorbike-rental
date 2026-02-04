@@ -35,10 +35,10 @@ export default function Navbar() {
               <div className="bg-primary p-2 rounded-xl text-white shadow-lg shadow-primary/30 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                 <Bike size={24} />
               </div>
-              <span className={`font-black text-2xl tracking-tighter transition-colors ${
+              <span className={`font-black text-2xl tracking-tighter transition-colors drop-shadow-sm ${
                 isScrolled ? "text-gray-900" : "text-white drop-shadow-md"
               }`}>
-                SEWA<span className="text-primary">MOTOR</span>
+                SEWA<span className="text-primary font-black">MOTOR</span>
               </span>
             </Link>
           </div>

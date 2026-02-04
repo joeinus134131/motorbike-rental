@@ -62,11 +62,11 @@ export default function AdminSidebar() {
       </div>
 
       <div className="mt-auto p-8 pt-0">
-        <div className="bg-gradient-to-br from-indigo-500/10 to-transparent p-6 rounded-[2rem] border border-white/5 mb-8">
-          <div className="w-10 h-10 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
-            <Sparkles size={20} className="text-indigo-400" />
+        <div className="bg-gradient-to-br from-orange-500/10 to-transparent p-6 rounded-[2rem] border border-white/5 mb-8">
+          <div className="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center mb-4">
+            <Sparkles size={20} className="text-orange-400" />
           </div>
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-indigo-300 mb-1">Status</p>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-orange-300 mb-1">Status</p>
           <p className="text-sm font-bold text-white">Super Admin Mode</p>
         </div>
 
