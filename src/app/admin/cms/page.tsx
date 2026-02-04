@@ -1,25 +1,61 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Save, Loader2, Globe, Mail, Phone, MapPin, Sparkles, Image as ImageIcon } from "lucide-react";
+import { Save, Loader2, Globe, Mail, Phone, MapPin, Sparkles, Image as ImageIcon, Share2, BarChart3, Star } from "lucide-react";
 
 export default function AdminCMSPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [config, setConfig] = useState({
+    // Hero
     heroTitle: "",
     heroSubtitle: "",
     heroImage: "",
+    // Hero Extras
+    heroBadge: "",
+    heroButtonText: "",
+    // Branding
+    brandName: "",
+    brandDescription: "",
+    // Contact
     contactEmail: "",
     contactPhone: "",
     address: "",
+    // Socials
+    instagramUrl: "",
+    twitterUrl: "",
+    facebookUrl: "",
+    // Features
+    feature1Title: "",
+    feature1Description: "",
+    feature2Title: "",
+    feature2Description: "",
+    feature3Title: "",
+    feature3Description: "",
+    // Featured Section
+    featuredSectionTitle: "",
+    featuredSectionSubtitle: "",
+    // CTA Section
+    ctaTitle: "",
+    ctaDescription: "",
+    ctaButtonText: "",
+    // Stats
+    stat1Value: "",
+    stat1Label: "",
+    stat2Value: "",
+    stat2Label: "",
+    stat3Value: "",
+    stat3Label: "",
+    stat4Value: "",
+    stat4Label: "",
   });
 
   useEffect(() => {
-    fetch("/api/cms/landing")
+    fetch("/api/admin/cms")
       .then((res) => res.json())
       .then((data) => {
-        setConfig(data || config);
+        // Merge with default/empty state to ensure all fields exist
+        setConfig(prev => ({ ...prev, ...data }));
         setLoading(false);
       });
   }, []);
@@ -27,7 +63,7 @@ export default function AdminCMSPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await fetch("/api/cms/landing", {
+      await fetch("/api/admin/cms", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(config),
@@ -50,7 +86,7 @@ export default function AdminCMSPage() {
   );
 
   return (
-    <div className="p-10 max-w-6xl mx-auto">
+    <div className="p-10 max-w-6xl mx-auto pb-32">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <div className="flex items-center gap-2 text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-3">
@@ -58,7 +94,7 @@ export default function AdminCMSPage() {
             <span>Content Management</span>
           </div>
           <h1 className="text-4xl font-black text-gray-900 tracking-tighter">Edit Landing Page</h1>
-          <p className="text-gray-500 font-medium mt-1">Kustomisasi tampilan pesan dan informasi kontak utama.</p>
+          <p className="text-gray-500 font-medium mt-1">Kustomisasi seluruh konten website utama dari satu tempat.</p>
         </div>
         <button
           onClick={handleSave}
@@ -72,11 +108,39 @@ export default function AdminCMSPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2 space-y-10">
-          {/* Hero Section */}
-          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/40 relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-2 h-full bg-primary/20" />
-             <SectionHeader title="Visual & Hero Section" icon={<Globe size={20} />} />
+          
+          {/* Branding Section */}
+          <SectionContainer title="Branding Identity" icon={<Star size={20} />} color="bg-orange-500/20">
              <div className="grid gap-8 mt-8">
+               <ModernInput 
+                 label="Brand Name" 
+                 value={config.brandName} 
+                 onChange={(e) => setConfig({...config, brandName: e.target.value})} 
+               />
+               <ModernInput 
+                 label="Brand Description (Footer)" 
+                 area 
+                 value={config.brandDescription} 
+                 onChange={(e) => setConfig({...config, brandDescription: e.target.value})} 
+               />
+             </div>
+          </SectionContainer>
+
+          {/* Hero Section */}
+          <SectionContainer title="Visual & Hero Section" icon={<Globe size={20} />} color="bg-primary/20">
+             <div className="grid gap-8 mt-8">
+               <div className="grid grid-cols-2 gap-4">
+                 <ModernInput 
+                   label="Hero Badge (Top Tag)" 
+                   value={config.heroBadge} 
+                   onChange={(e) => setConfig({...config, heroBadge: e.target.value})} 
+                 />
+                 <ModernInput 
+                   label="Hero Button Text" 
+                   value={config.heroButtonText} 
+                   onChange={(e) => setConfig({...config, heroButtonText: e.target.value})} 
+                 />
+               </div>
                <ModernInput 
                  label="Hero Main Title" 
                  value={config.heroTitle} 
@@ -95,12 +159,92 @@ export default function AdminCMSPage() {
                  onChange={(e) => setConfig({...config, heroImage: e.target.value})} 
                />
              </div>
-          </div>
+          </SectionContainer>
+          
+          {/* Features Section */}
+          <SectionContainer title="Key Features" icon={<Sparkles size={20} />} color="bg-emerald-500/20">
+            <div className="space-y-8 mt-8">
+              <div className="p-6 bg-gray-50/50 rounded-3xl border border-gray-100">
+                <p className="text-xs font-black uppercase text-gray-400 mb-4">Feature 1</p>
+                <div className="grid gap-4">
+                  <ModernInput label="Title" value={config.feature1Title} onChange={(e) => setConfig({...config, feature1Title: e.target.value})} />
+                  <ModernInput label="Description" value={config.feature1Description} onChange={(e) => setConfig({...config, feature1Description: e.target.value})} area />
+                </div>
+              </div>
+              <div className="p-6 bg-gray-50/50 rounded-3xl border border-gray-100">
+                <p className="text-xs font-black uppercase text-gray-400 mb-4">Feature 2</p>
+                <div className="grid gap-4">
+                  <ModernInput label="Title" value={config.feature2Title} onChange={(e) => setConfig({...config, feature2Title: e.target.value})} />
+                  <ModernInput label="Description" value={config.feature2Description} onChange={(e) => setConfig({...config, feature2Description: e.target.value})} area />
+                </div>
+              </div>
+              <div className="p-6 bg-gray-50/50 rounded-3xl border border-gray-100">
+                <p className="text-xs font-black uppercase text-gray-400 mb-4">Feature 3</p>
+                <div className="grid gap-4">
+                  <ModernInput label="Title" value={config.feature3Title} onChange={(e) => setConfig({...config, feature3Title: e.target.value})} />
+                  <ModernInput label="Description" value={config.feature3Description} onChange={(e) => setConfig({...config, feature3Description: e.target.value})} area />
+                </div>
+              </div>
+            </div>
+          </SectionContainer>
+          
+           {/* Section Headings */}
+           <SectionContainer title="Page Sections" icon={<BarChart3 size={20} />} color="bg-purple-500/20">
+             <div className="grid gap-8 mt-8">
+               <ModernInput 
+                 label="Featured Section Title" 
+                 value={config.featuredSectionTitle} 
+                 onChange={(e) => setConfig({...config, featuredSectionTitle: e.target.value})} 
+               />
+               <ModernInput 
+                 label="Featured Section Subtitle" 
+                 value={config.featuredSectionSubtitle} 
+                 onChange={(e) => setConfig({...config, featuredSectionSubtitle: e.target.value})} 
+               />
+               <div className="h-px bg-gray-100 my-2" />
+               <ModernInput 
+                 label="CTA / Custom Bike Title" 
+                 value={config.ctaTitle} 
+                 onChange={(e) => setConfig({...config, ctaTitle: e.target.value})} 
+               />
+               <ModernInput 
+                 label="CTA Description" 
+                 area
+                 value={config.ctaDescription} 
+                 onChange={(e) => setConfig({...config, ctaDescription: e.target.value})} 
+               />
+               <ModernInput 
+                 label="CTA Button Text" 
+                 value={config.ctaButtonText} 
+                 onChange={(e) => setConfig({...config, ctaButtonText: e.target.value})} 
+               />
+             </div>
+          </SectionContainer>
+
+          {/* Stats Section */}
+          <SectionContainer title="Statistics / Proof" icon={<BarChart3 size={20} />} color="bg-blue-500/20">
+            <div className="grid grid-cols-2 gap-6 mt-8">
+               <div className="space-y-4">
+                 <ModernInput label="Stat 1 Value" value={config.stat1Value} onChange={(e) => setConfig({...config, stat1Value: e.target.value})} />
+                 <ModernInput label="Stat 1 Label" value={config.stat1Label} onChange={(e) => setConfig({...config, stat1Label: e.target.value})} />
+               </div>
+               <div className="space-y-4">
+                 <ModernInput label="Stat 2 Value" value={config.stat2Value} onChange={(e) => setConfig({...config, stat2Value: e.target.value})} />
+                 <ModernInput label="Stat 2 Label" value={config.stat2Label} onChange={(e) => setConfig({...config, stat2Label: e.target.value})} />
+               </div>
+               <div className="space-y-4">
+                 <ModernInput label="Stat 3 Value" value={config.stat3Value} onChange={(e) => setConfig({...config, stat3Value: e.target.value})} />
+                 <ModernInput label="Stat 3 Label" value={config.stat3Label} onChange={(e) => setConfig({...config, stat3Label: e.target.value})} />
+               </div>
+               <div className="space-y-4">
+                 <ModernInput label="Stat 4 Value" value={config.stat4Value} onChange={(e) => setConfig({...config, stat4Value: e.target.value})} />
+                 <ModernInput label="Stat 4 Label" value={config.stat4Label} onChange={(e) => setConfig({...config, stat4Label: e.target.value})} />
+               </div>
+            </div>
+          </SectionContainer>
 
           {/* Contact Section */}
-          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/40 relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-2 h-full bg-indigo-500/20" />
-             <SectionHeader title="Contact Information" icon={<Mail size={20} />} />
+          <SectionContainer title="Contact Information" icon={<Mail size={20} />} color="bg-indigo-500/20">
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                <ModernInput 
                  label="Support Email" 
@@ -124,7 +268,28 @@ export default function AdminCMSPage() {
                  onChange={(e) => setConfig({...config, address: e.target.value})} 
                />
              </div>
-          </div>
+          </SectionContainer>
+          
+          {/* Social Media */}
+          <SectionContainer title="Social Media" icon={<Share2 size={20} />} color="bg-pink-500/20">
+             <div className="grid gap-8 mt-8">
+               <ModernInput 
+                 label="Instagram URL" 
+                 value={config.instagramUrl} 
+                 onChange={(e) => setConfig({...config, instagramUrl: e.target.value})} 
+               />
+               <ModernInput 
+                 label="Twitter URL" 
+                 value={config.twitterUrl} 
+                 onChange={(e) => setConfig({...config, twitterUrl: e.target.value})} 
+               />
+               <ModernInput 
+                 label="Facebook URL" 
+                 value={config.facebookUrl} 
+                 onChange={(e) => setConfig({...config, facebookUrl: e.target.value})} 
+               />
+             </div>
+          </SectionContainer>
         </div>
 
         {/* Preview Helper */}
@@ -132,20 +297,25 @@ export default function AdminCMSPage() {
           <div className="bg-gradient-to-br from-gray-900 to-indigo-900 text-white p-10 rounded-[2.5rem] shadow-2xl shadow-indigo-200/20 sticky top-32">
             <h4 className="text-xl font-black mb-6 tracking-tight">Live Tips</h4>
             <div className="space-y-6">
-              <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
-                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-300 mb-2">Typography</p>
-                <p className="text-sm text-gray-300 leading-relaxed font-medium">Gunakan heading yang singkat dan kuat untuk menarik perhatian pengguna dalam 3 detik pertama.</p>
-              </div>
-              <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
-                <p className="text-[10px] font-black uppercase tracking-widest text-emerald-300 mb-2">Visuals</p>
-                <p className="text-sm text-gray-300 leading-relaxed font-medium">Pastikan URL gambar menggunakan resolusi tinggi (min. 1920x1080) untuk hasil maksimal di layar lebar.</p>
-              </div>
+              <TipBlock title="Typography" text="Gunakan heading yang singkat dan kuat untuk menarik perhatian pengguna dalam 3 detik pertama." color="text-indigo-300" />
+              <TipBlock title="Visuals" text="Pastikan URL gambar menggunakan resolusi tinggi (min. 1920x1080) untuk hasil maksimal." color="text-emerald-300" />
+              <TipBlock title="Social Proof" text="Tampilkan data statistik yang nyata untuk meningkatkan kepercayaan pelanggan." color="text-orange-300" />
             </div>
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+function SectionContainer({ title, icon, color, children }: { title: string, icon: any, color: string, children: React.ReactNode }) {
+  return (
+     <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/40 relative overflow-hidden">
+        <div className={`absolute top-0 left-0 w-2 h-full ${color}`} />
+        <SectionHeader title={title} icon={icon} />
+        {children}
+     </div>
+  )
 }
 
 function SectionHeader({ title, icon }: { title: string, icon: any }) {
@@ -162,7 +332,7 @@ function SectionHeader({ title, icon }: { title: string, icon: any }) {
   );
 }
 
-function ModernInput({ label, value, onChange, area = false, icon }: { label: string, value: string, onChange: (e: any) => void, area?: boolean, icon?: any }) {
+function ModernInput({ label, value, onChange, area = false, icon }: { label: string, value: string | undefined | null, onChange: (e: any) => void, area?: boolean, icon?: any }) {
   return (
     <div className="space-y-2">
       <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">{label}</label>
@@ -175,18 +345,27 @@ function ModernInput({ label, value, onChange, area = false, icon }: { label: st
         {area ? (
           <textarea
             className={`w-full ${icon ? 'pl-14' : 'px-6'} py-4 bg-gray-50 border border-transparent rounded-[1.5rem] focus:bg-white focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-gray-900 font-bold placeholder:text-gray-300 text-sm min-h-[120px]`}
-            value={value}
+            value={value || ""}
             onChange={onChange}
           />
         ) : (
           <input
             type="text"
             className={`w-full ${icon ? 'pl-14' : 'px-6'} py-4 bg-gray-50 border border-transparent rounded-[1.5rem] focus:bg-white focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-gray-900 font-bold placeholder:text-gray-300 text-sm`}
-            value={value}
+            value={value || ""}
             onChange={onChange}
           />
         )}
       </div>
     </div>
   );
+}
+
+function TipBlock({ title, text, color }: { title: string, text: string, color: string }) {
+  return (
+    <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
+      <p className={`text-[10px] font-black uppercase tracking-widest ${color} mb-2`}>{title}</p>
+      <p className="text-sm text-gray-300 leading-relaxed font-medium">{text}</p>
+    </div>
+  )
 }

@@ -3,7 +3,29 @@
 import Link from "next/link";
 import { Bike, Instagram, Twitter, Facebook, Mail, Phone, MapPin, Send, ArrowRight } from "lucide-react";
 
-export default function Footer() {
+export default function Footer({ 
+  brandName = "SEWA MOTOR",
+  brandDescription = "Platform penyewaan motor terbaik yang memberikan kenyamanan #1 untuk perjalanan Anda. Unit terbaru, harga transparan, dan pelayanan 24 jam.",
+  contactEmail = "hello@sewamotor.com",
+  contactPhone = "+62 812 3456 7890",
+  address = "Jl. Sudirman No 1-2, Jakarta",
+  instagramUrl,
+  twitterUrl,
+  facebookUrl
+}: {
+  brandName?: string;
+  brandDescription?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
+  facebookUrl?: string;
+}) {
+  const brandParts = brandName.split(" ");
+  const firstPart = brandParts[0];
+  const lastPart = brandParts.slice(1).join(" ");
+
   return (
     <footer className="bg-gray-900 text-white pt-24 pb-12 overflow-hidden relative">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full -mr-32 -mt-32 blur-[100px]" />
@@ -18,16 +40,16 @@ export default function Footer() {
                 <Bike size={24} />
               </div>
               <span className="font-black text-2xl tracking-tighter uppercase">
-                SEWA<span className="text-primary">MOTOR</span>
+                {firstPart}<span className="text-primary">{lastPart}</span>
               </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed font-medium">
-              Platform penyewaan motor terbaik yang memberikan kenyamanan #1 untuk perjalanan Anda. Unit terbaru, harga transparan, dan pelayanan 24 jam.
+              {brandDescription}
             </p>
             <div className="flex gap-4">
-              <SocialLink icon={<Instagram size={20} />} />
-              <SocialLink icon={<Twitter size={20} />} />
-              <SocialLink icon={<Facebook size={20} />} />
+              {instagramUrl && <Link href={instagramUrl} target="_blank"><SocialLink icon={<Instagram size={20} />} /></Link>}
+              {twitterUrl && <Link href={twitterUrl} target="_blank"><SocialLink icon={<Twitter size={20} />} /></Link>}
+              {facebookUrl && <Link href={facebookUrl} target="_blank"><SocialLink icon={<Facebook size={20} />} /></Link>}
             </div>
           </div>
 
@@ -46,9 +68,9 @@ export default function Footer() {
           <div className="space-y-8">
             <h4 className="text-lg font-black tracking-tight">Kontak</h4>
             <div className="space-y-6">
-              <ContactItem icon={<Mail size={18} />} label="hello@sewamotor.com" />
-              <ContactItem icon={<Phone size={18} />} label="+62 812 3456 7890" />
-              <ContactItem icon={<MapPin size={18} />} label="Jl. Sudirman No 1-2, Jakarta" />
+              <ContactItem icon={<Mail size={18} />} label={contactEmail} />
+              <ContactItem icon={<Phone size={18} />} label={contactPhone} />
+              <ContactItem icon={<MapPin size={18} />} label={address} />
             </div>
           </div>
 
@@ -73,7 +95,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">
-            © 2026 SEWAMOTOR. All rights reserved.
+            © 2026 {brandName}. All rights reserved.
           </p>
           <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-gray-500">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>

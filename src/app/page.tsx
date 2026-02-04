@@ -4,22 +4,25 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Bike, ShieldCheck, Clock, MapPin, Star, ArrowRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { getCMSConfig } from "@/lib/cms";
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const cmsConfig = await prisma.landingPageConfig.findFirst() || {
-    heroTitle: "Sewa Motor Impian dengan Mudah",
-    heroSubtitle: "Pilihan motor terlengkap, harga terjangkau, dan pelayanan 24 jam untuk perjalanan Anda.",
-    heroImage: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=1200",
-  };
+  const cmsConfig = await getCMSConfig();
 
   const motorbikes = await prisma.motorbike.findMany({
     where: { status: "available" },
+    orderBy: [
+      { bookings: { _count: "desc" } },
+      { createdAt: "desc" }
+    ],
     take: 6,
   });
 
   return (
     <main className="min-h-screen bg-[#fafafa]">
-      <Navbar />
+      <Navbar brandName={cmsConfig.brandName} />
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center pt-16">
@@ -35,7 +38,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 relative z-10 w-full">
           <div className="max-w-3xl text-white">
             <span className="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-primary text-xs font-black uppercase tracking-widest mb-6 animate-in fade-in slide-in-from-bottom duration-700">
-              Premium Rental Experience
+              {cmsConfig.heroBadge || "Premium Rental Experience"}
             </span>
             <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter drop-shadow-2xl animate-in fade-in slide-in-from-bottom duration-1000">
               {cmsConfig.heroTitle}
@@ -48,7 +51,7 @@ export default async function HomePage() {
                 href="#bikes"
                 className="px-10 py-5 bg-primary text-white rounded-2xl font-black shadow-2xl shadow-primary/40 hover:scale-105 active:scale-95 transition-all text-lg flex items-center gap-2"
               >
-                Jelajahi Armada
+                {cmsConfig.heroButtonText || "Jelajahi Armada"}
                 <ArrowRight size={20} />
               </Link>
               <div className="flex items-center gap-4 px-6 py-5 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
@@ -73,8 +76,8 @@ export default async function HomePage() {
               <div className="w-20 h-20 bg-orange-50 text-primary rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-6 transition-transform">
                 <Bike size={40} />
               </div>
-              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase">Unit Terbaru</h3>
-              <p className="text-gray-500 leading-relaxed text-lg">Seluruh unit motor kami dijamin dalam kondisi prima dengan perawatan rutin berkala.</p>
+              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase">{cmsConfig.feature1Title || "Unit Terbaru"}</h3>
+              <p className="text-gray-500 leading-relaxed text-lg">{cmsConfig.feature1Description || "Seluruh unit motor kami dijamin dalam kondisi prima dengan perawatan rutin berkala."}</p>
             </div>
             
             <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-2xl shadow-orange-200/20 border border-orange-100/50 hover:bg-white transition-all duration-500 hover:-translate-y-4 relative overflow-hidden">
@@ -82,16 +85,16 @@ export default async function HomePage() {
               <div className="w-20 h-20 bg-orange-50 text-orange-500 rounded-3xl flex items-center justify-center mb-10 group-hover:-rotate-6 transition-transform">
                 <ShieldCheck size={40} />
               </div>
-              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase text-gray-900">Proteksi Penuh</h3>
-              <p className="text-gray-500 leading-relaxed text-lg">Nikmati perjalanan tanpa cemas dengan proteksi asuransi komprehensif di setiap kilometer.</p>
+              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase text-gray-900">{cmsConfig.feature2Title || "Proteksi Penuh"}</h3>
+              <p className="text-gray-500 leading-relaxed text-lg">{cmsConfig.feature2Description || "Nikmati perjalanan tanpa cemas dengan proteksi asuransi komprehensif di setiap kilometer."}</p>
             </div>
 
             <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 border border-white hover:bg-white transition-all duration-500 hover:-translate-y-4">
               <div className="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-6 transition-transform">
                 <Clock size={40} />
               </div>
-              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase">Booking Kilat</h3>
-              <p className="text-gray-500 leading-relaxed text-lg">Proses verifikasi dan pengambilan unit yang efisien, langsung berangkat dalam 15 menit.</p>
+              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase">{cmsConfig.feature3Title || "Booking Kilat"}</h3>
+              <p className="text-gray-500 leading-relaxed text-lg">{cmsConfig.feature3Description || "Proses verifikasi dan pengambilan unit yang efisien, langsung berangkat dalam 15 menit."}</p>
             </div>
           </div>
         </div>
@@ -107,8 +110,8 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
             <div className="max-w-xl">
-              <span className="text-primary font-black text-sm uppercase tracking-[0.3em] mb-4 block">Fleet selection</span>
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight tracking-tighter">Armada Favorit Musim Ini</h2>
+              <span className="text-primary font-black text-sm uppercase tracking-[0.3em] mb-4 block">{cmsConfig.featuredSectionSubtitle || "Fleet selection"}</span>
+              <h2 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight tracking-tighter">{cmsConfig.featuredSectionTitle || "Armada Favorit Musim Ini"}</h2>
             </div>
             <Link 
               href="/motorbikes" 
@@ -171,24 +174,33 @@ export default async function HomePage() {
       <section className="py-24 bg-gray-900 text-white overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
           <div>
-            <span className="text-5xl font-black block mb-2 text-primary">500+</span>
-            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">Units Available</span>
+            <span className="text-5xl font-black block mb-2 text-primary">{cmsConfig.stat1Value || "500+"}</span>
+            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{cmsConfig.stat1Label || "Units Available"}</span>
           </div>
           <div>
-            <span className="text-5xl font-black block mb-2 text-primary">15k+</span>
-            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">Happy Riders</span>
+            <span className="text-5xl font-black block mb-2 text-primary">{cmsConfig.stat2Value || "15k+"}</span>
+            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{cmsConfig.stat2Label || "Happy Riders"}</span>
           </div>
           <div>
-            <span className="text-5xl font-black block mb-2 text-primary">24h</span>
-            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">Support Service</span>
+            <span className="text-5xl font-black block mb-2 text-primary">{cmsConfig.stat3Value || "24h"}</span>
+            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{cmsConfig.stat3Label || "Support Service"}</span>
           </div>
           <div>
-            <span className="text-5xl font-black block mb-2 text-primary">4.9</span>
-            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">Trustpilot Score</span>
+            <span className="text-5xl font-black block mb-2 text-primary">{cmsConfig.stat4Value || "4.9"}</span>
+            <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{cmsConfig.stat4Label || "Trustpilot Score"}</span>
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer 
+        brandName={cmsConfig.brandName}
+        brandDescription={cmsConfig.brandDescription || undefined}
+        contactEmail={cmsConfig.contactEmail}
+        contactPhone={cmsConfig.contactPhone}
+        address={cmsConfig.address}
+        instagramUrl={cmsConfig.instagramUrl || undefined}
+        twitterUrl={cmsConfig.twitterUrl || undefined}
+        facebookUrl={cmsConfig.facebookUrl || undefined}
+      />
     </main>
   );
 }

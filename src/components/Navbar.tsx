@@ -5,7 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { Bike, User, LogOut, LayoutDashboard, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function Navbar({ brandName = "SEWA MOTOR" }: { brandName?: string }) {
   const { data: session } = useSession();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +24,10 @@ export default function Navbar() {
     { name: "Contact", href: "/#contact" },
   ];
 
+  const brandParts = brandName.split(" ");
+  const firstPart = brandParts[0];
+  const lastPart = brandParts.slice(1).join(" ");
+
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled ? "bg-white/70 backdrop-blur-xl border-b py-2 shadow-sm" : "bg-transparent py-4"
@@ -38,7 +42,7 @@ export default function Navbar() {
               <span className={`font-black text-2xl tracking-tighter transition-colors drop-shadow-sm ${
                 isScrolled ? "text-gray-900" : "text-white drop-shadow-md"
               }`}>
-                SEWA<span className="text-primary font-black">MOTOR</span>
+                {firstPart}<span className="text-primary font-black">{lastPart ? lastPart : ""}</span>
               </span>
             </Link>
           </div>

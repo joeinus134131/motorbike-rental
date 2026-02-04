@@ -66,14 +66,58 @@ model Booking {
 }
 
 model LandingPageConfig {
-  id            String   @id @default("default")
-  heroTitle     String
-  heroSubtitle  String
-  heroImage     String
-  contactEmail  String
-  contactPhone  String
-  address       String   @db.Text
-  updatedAt     DateTime @updatedAt
+  id                String   @id @default("default")
+  // Hero
+  heroTitle         String
+  heroSubtitle      String
+  heroImage         String
+  
+  // Branding
+  brandName         String   @default("SEWA MOTOR")
+  brandDescription  String?  @db.Text
+
+  // Contact
+  contactEmail      String
+  contactPhone      String
+  address           String   @db.Text
+
+  // Socials
+  instagramUrl      String?
+  twitterUrl        String?
+  facebookUrl       String?
+
+  // Features (up to 3)
+  feature1Title     String?
+  feature1Description String? @db.Text
+  feature2Title     String?
+  feature2Description String? @db.Text
+  feature3Title     String?
+  feature3Description String? @db.Text
+
+  // Stats (up to 4)
+  stat1Value        String?
+  stat1Label        String?
+  stat2Value        String?
+  stat2Label        String?
+  stat3Value        String?
+  stat3Label        String?
+  stat4Value        String?
+  stat4Label        String?
+
+  // Hero Extras
+  heroBadge         String?  @default("Premium Rental Experience")
+  heroButtonText    String?  @default("Jelajahi Armada")
+
+  // Featured Section
+  featuredSectionTitle    String? @default("Armada Favorit Musim Ini")
+  featuredSectionSubtitle String? @default("Fleet selection")
+
+  // CTA Section (Custom Request)
+  ctaTitle          String? @default("Butuh Motor Custom Berbeda?")
+  ctaDescription    String? @db.Text @default("Hubungi admin kami untuk permintaan unit khusus atau penyewaan jangka panjang.")
+  ctaButtonText     String? @default("Chat WhatsApp Admin")
+
+  updatedAt         DateTime @updatedAt
 }
 
 model SystemConfig {

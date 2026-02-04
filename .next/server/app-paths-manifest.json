@@ -1,8 +1,11 @@
 {
-  "/motorbikes/page": "app/motorbikes/page.js",
-  "/motorbikes/[id]/page": "app/motorbikes/[id]/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/bookings/new/page": "app/bookings/new/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/admin/users/route": "app/api/admin/users/route.js",
+  "/api/admin/motorbikes/route": "app/api/admin/motorbikes/route.js",
+  "/api/admin/cms/route": "app/api/admin/cms/route.js",
+  "/admin/users/page": "app/admin/users/page.js",
+  "/admin/motorbikes/page": "app/admin/motorbikes/page.js",
+  "/admin/cms/page": "app/admin/cms/page.js"
 }
